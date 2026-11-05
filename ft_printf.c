@@ -6,51 +6,62 @@
 /*   By: vduryee <vduryee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/02 13:49:14 by vduryee           #+#    #+#             */
-/*   Updated: 2026/11/02 17:51:22 by vduryee          ###   ########.fr       */
+/*   Updated: 2026/11/05 17:03:23 by vduryee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_switch (char *format)
+static int	ft_switch(char type, va_list args, int count)
 {
-	if (*format == '%')
-		ft_putchar_fd(*format, 1);
-	else if (*format == 'c')
-		ft_putchar_fd((*format + 1) , 1);
-	else if (*format == 's')
-		ft_putstr_fd(format + 1, 1);
-	else if (*format == 'p')
-	;// print pointer in hex (must print (nil) 0x in front)
-	else if (*format == 'd' || *format == 'i')
-		ft_putnbr_fd(*format, 1);
-	else if (*format == 'u')
-	;// putnbr but unsigned
-	else if (*format == 'x')
-	;// putnbrhex in lowercase (base 16)
-	else if (*format == 'X')
-	;// putnbrhex in uppercase (base 16)
-	return (0); // return count ?
+	if (type == 'c')
+		count += ft_putchar(va_arg(args, int), count);
+	if (type == 's')
+		count += ft_putstr(va_arg(args, char *), count);
+	if (type == 'd' || type == 'i')
+		count += ft_putnbr(va_arg(args, int), count);
+	if (type == 'u')
+	// putnbr but unsigned
+	if (type == 'p')
+	// print void pointer in hex
+	if (type == 'x')
+	// putnbr hex lowercase
+	if (type == 'X')
+	// putnbr hex uppercase
+	if (type == '%')
+		count += ft_putchar('%', 1);
+	return (count);
 }
 
-int	ft_printf(const char *format, ...)
-{
-	va_list	list;
+// handle the number of %, if !pair, error
 
-	va_start(list, format);
-	while (*format)
+int ft_printf(const char *format, ...)
+{
+	int	i;
+	int	count;
+	va_list	args;
+
+	i = 0;
+	count = 0;
+	va_start (args, format);
+	while (format[i])
 	{
-		if (*format == '%')
-			format++;
-		if (*format && (*format + 1) == '\0')
-			return (ft_switch(format));
-		else
-			ft_putchar_fd(*format, 1);
-		format++;
-	}	
-	va_end(list);
-	return(0); // return count ?
+		if (format[i] != '%')
+		{
+			ft_putchar_fd(format[i], 1);
+			count++;
+		}
+		else if (format[i] == '%' && format[i + 1] != '\0')
+		{
+			count += (ft_switch(format[i + 1], args, count));
+			i++;
+		}
+		i++;
+	}
+	va_end (args);
+	return (count);
 }
+
 int main ()
 {
 	int nb = 123;
