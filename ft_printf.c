@@ -6,30 +6,31 @@
 /*   By: vduryee <vduryee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/02 13:49:14 by vduryee           #+#    #+#             */
-/*   Updated: 2026/11/05 17:03:23 by vduryee          ###   ########.fr       */
+/*   Updated: 2026/11/05 18:17:19 by vduryee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <stdio.h>
 
 static int	ft_switch(char type, va_list args, int count)
 {
 	if (type == 'c')
-		count += ft_putchar(va_arg(args, int), count);
-	if (type == 's')
+		count += ft_putchar(va_arg(args, int));
+	else if (type == 's')
 		count += ft_putstr(va_arg(args, char *), count);
-	if (type == 'd' || type == 'i')
+	else if (type == 'd' || type == 'i')
 		count += ft_putnbr(va_arg(args, int), count);
-	if (type == 'u')
-	// putnbr but unsigned
-	if (type == 'p')
-	// print void pointer in hex
-	if (type == 'x')
-	// putnbr hex lowercase
-	if (type == 'X')
-	// putnbr hex uppercase
-	if (type == '%')
-		count += ft_putchar('%', 1);
+	else if (type == '%')
+		count += ft_putchar('%');
+	else if (type == 'u')
+		count += ft_putnbr_unsigned(va_arg(args, unsigned int), count);
+	// else if (type == 'p')
+	// // print void pointer in hex
+	// else if (type == 'x')
+	// // putnbr hex lowercase
+	// else if (type == 'X')
+	// // putnbr hex uppercase
 	return (count);
 }
 
@@ -48,12 +49,12 @@ int ft_printf(const char *format, ...)
 	{
 		if (format[i] != '%')
 		{
-			ft_putchar_fd(format[i], 1);
+			ft_putchar(format[i]);
 			count++;
 		}
 		else if (format[i] == '%' && format[i + 1] != '\0')
 		{
-			count += (ft_switch(format[i + 1], args, count));
+			count = (ft_switch(format[i + 1], args, count));
 			i++;
 		}
 		i++;
@@ -65,10 +66,19 @@ int ft_printf(const char *format, ...)
 int main ()
 {
 	int nb = 123;
+	unsigned int unb = 2147483648;
 	char ch = 'a';
 	char str[] = "Hello World";
 	ft_printf("Number: %d\n", nb);
 	ft_printf("Char: %c\n", ch);
 	ft_printf("String: %s\n", str);
+	ft_printf("Unsigned: %u\n", unb);
+	ft_printf("---------------------\n");
+	int test = ft_printf("Percent: %%\n");
+	int test2 = printf("Percent: %%\n");
+	ft_printf("%d\n", test);
+	ft_printf("%d\n", test2);
+	printf("%d\n", test);
+	printf("%d\n", test2);
 	return 0;
 }

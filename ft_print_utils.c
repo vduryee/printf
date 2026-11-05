@@ -6,16 +6,16 @@
 /*   By: vduryee <vduryee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/05 13:43:23 by vduryee           #+#    #+#             */
-/*   Updated: 2026/11/05 16:27:05 by vduryee          ###   ########.fr       */
+/*   Updated: 2026/11/05 18:18:15 by vduryee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int ft_putchar (char c, int count)
+int ft_putchar (char c)
 {
-	ft_putchar_fd(c, 1);
-	return (count + 2);
+	write(1, &c, 1);
+	return (1);
 }
 
 int ft_putstr (char *str, int count)
@@ -36,12 +36,27 @@ int	ft_putnbr(int n, int count)
 	}
 	if (n < 0)
 	{
-		ft_putchar('-', 1);
+		ft_putchar('-');
 		n = n * -1;
 	}
 	if (n >= 0 && n < 10)
 	{
-		ft_putchar(n + '0', 1);
+		ft_putchar(n + '0');
+	}
+	else
+	{
+		ft_putnbr(n / 10, 1);
+		ft_putnbr(n % 10, 1);
+		count++;
+	}
+	return (count);
+}
+
+int	ft_putnbr_unsigned(unsigned int n, int count)
+{
+	if (n >= 0 && n < 10)
+	{
+		ft_putchar(n + '0');
 	}
 	else
 	{
