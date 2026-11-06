@@ -6,7 +6,7 @@
 /*   By: vduryee <vduryee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/05 13:43:23 by vduryee           #+#    #+#             */
-/*   Updated: 2026/11/06 11:14:41 by vduryee          ###   ########.fr       */
+/*   Updated: 2026/11/06 12:26:38 by vduryee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int ft_putstr (char *str)
 {
 	int	count;
 
+	if (!str)
+		return (ft_putstr("(null)"));
 	count = ft_strlen(str);
 	ft_putstr_fd(str, 1);
 	return (count);
@@ -67,7 +69,7 @@ int	ft_putnbr_unsigned(unsigned int n)
 	return (count);
 }
 
-int ft_putnbr_hex(unsigned int n, char type)
+int ft_putnbr_hex(unsigned long int n, char type)
 {
 	char *base;
 	int	count;
