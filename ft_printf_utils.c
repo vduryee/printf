@@ -1,31 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_utils.c                                   :+:      :+:    :+:   */
+/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vduryee <vduryee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/05 13:43:23 by vduryee           #+#    #+#             */
-/*   Updated: 2026/11/06 12:26:38 by vduryee          ###   ########.fr       */
+/*   Updated: 2026/11/06 15:28:22 by vduryee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int ft_putchar (char c)
+int	ft_putchar(char c)
 {
 	write(1, &c, 1);
 	return (1);
 }
 
-int ft_putstr (char *str)
+int	ft_putstr(char *str)
 {
 	int	count;
+	int	i;
 
 	if (!str)
 		return (ft_putstr("(null)"));
-	count = ft_strlen(str);
-	ft_putstr_fd(str, 1);
+	count = 0;
+	i = 0;
+	while (str[count])
+		count++;
+	while (str[i])
+	{
+		ft_putchar(str[i]);
+		i++;
+	}
 	return (count);
 }
 
@@ -69,10 +77,10 @@ int	ft_putnbr_unsigned(unsigned int n)
 	return (count);
 }
 
-int ft_putnbr_hex(unsigned long int n, char type)
+int	ft_putnbr_hex(unsigned long int n, char type)
 {
-	char *base;
-	int	count;
+	char	*base;
+	int		count;
 
 	count = 0;
 	if (type == 'x')
