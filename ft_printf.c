@@ -6,7 +6,7 @@
 /*   By: vduryee <vduryee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/02 13:49:14 by vduryee           #+#    #+#             */
-/*   Updated: 2026/11/05 18:17:19 by vduryee          ###   ########.fr       */
+/*   Updated: 2026/11/06 11:16:46 by vduryee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,17 @@ static int	ft_switch(char type, va_list args, int count)
 	if (type == 'c')
 		count += ft_putchar(va_arg(args, int));
 	else if (type == 's')
-		count += ft_putstr(va_arg(args, char *), count);
+		count += ft_putstr(va_arg(args, char *));
 	else if (type == 'd' || type == 'i')
-		count += ft_putnbr(va_arg(args, int), count);
+		count += ft_putnbr(va_arg(args, int));
 	else if (type == '%')
 		count += ft_putchar('%');
 	else if (type == 'u')
-		count += ft_putnbr_unsigned(va_arg(args, unsigned int), count);
+		count += ft_putnbr_unsigned(va_arg(args, unsigned int));
 	// else if (type == 'p')
 	// // print void pointer in hex
-	// else if (type == 'x')
-	// // putnbr hex lowercase
-	// else if (type == 'X')
-	// // putnbr hex uppercase
+	else if (type == 'x' || type == 'X')
+		count += ft_putnbr_hex(va_arg(args, unsigned int), type);
 	return (count);
 }
 
@@ -65,17 +63,32 @@ int ft_printf(const char *format, ...)
 
 int main ()
 {
-	int nb = 123;
+	int nb = 10354321;
 	unsigned int unb = 2147483648;
 	char ch = 'a';
 	char str[] = "Hello World";
 	ft_printf("Number: %d\n", nb);
 	ft_printf("Char: %c\n", ch);
 	ft_printf("String: %s\n", str);
+	ft_printf("Percent: %%\n");
 	ft_printf("Unsigned: %u\n", unb);
+	ft_printf("Lowercase hex: %x\n", nb);
+	ft_printf("Uppercase hex: %X\n", nb);
 	ft_printf("---------------------\n");
-	int test = ft_printf("Percent: %%\n");
-	int test2 = printf("Percent: %%\n");
+	// int test = ft_printf("Number: %i\n", nb);
+	// int test = ft_printf("Char: %c\n", ch);
+	// int test = ft_printf("String: %s\n", str);
+	// int test = ft_printf("Percent: %%\n");
+	// int test = ft_printf("Unsigned: %u\n", unb);
+	// int test = ft_printf("Lowercase hex: %x\n", nb);
+	int test = ft_printf("Uppercase hex: %X\n", nb);
+	// int test2 = printf("Number: %i\n", nb);
+	// int test2 = printf("Char: %c\n", ch);
+	// int test2 = printf("String: %s\n", str);
+	// int test2 = printf("Percent: %%\n");
+	// int test2 = printf("Unsigned: %u\n", unb);
+	// int test2 = printf("Lowercase hex: %x\n", nb);
+	int test2 = printf("Uppercase hex: %X\n", nb);
 	ft_printf("%d\n", test);
 	ft_printf("%d\n", test2);
 	printf("%d\n", test);
