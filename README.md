@@ -14,30 +14,25 @@ int ft_printf(const char *format, ...);
 
 ### Supported conversions
 
-| Specifier | Output                                      |
-|-----------|---------------------------------------------|
-| `%c`      | A single character                          |
-| `%s`      | A string (`(null)` if the pointer is NULL)  |
-| `%p`      | A pointer in hexadecimal                    |
-| `%d`      | A signed decimal integer                    |
-| `%i`      | A signed decimal integer                    |
-| `%u`      | An unsigned decimal integer                 |
+| Specifier | Output                                       |
+|-----------|----------------------------------------------|
+| `%c`      | A single character                           |
+| `%s`      | A string (`(null)` if the pointer is NULL)   |
+| `%p`      | A pointer in hexadecimal                     |
+| `%d`      | A signed decimal integer                     |
+| `%i`      | A signed decimal integer                     |
+| `%u`      | An unsigned decimal integer                  |
 | `%x`      | An unsigned integer in lowercase hexadecimal |
 | `%X`      | An unsigned integer in uppercase hexadecimal |
-| `%%`      | A literal percent sign                      |
-
-### How it works
-
-- `ft_printf` walks through the format string with `va_list` (`<stdarg.h>`). Normal characters are written as they are; when a `%` is found, the next character selects a conversion.
-- Every helper returns the number of characters it printed, and `ft_printf` adds them up for its return value.
+| `%%`      | A literal percent sign                       |
 
 ### Project structure
 
 ```
 .
 ├── Makefile
-├── ft_printf.h        # prototypes and includes
-├── ft_printf.c        # ft_printf and conversion dispatch
+├── ft_printf.h         # prototypes and includes
+├── ft_printf.c         # ft_printf and conversion dispatch
 └── ft_printf_utils.c   # printing helpers (char, string, numbers, hex)
 ```
 
@@ -82,6 +77,20 @@ cc main.c libftprintf.a -o test
 
 A good way to test is to compare the output and the return value of `ft_printf` against the real `printf` for the same format string.
 
+## How it works
+
+| Step | What happens |
+|:---:|---|
+| 1 | `va_start` opens the list of extra arguments. |
+| 2 | The format string is read character by character. |
+| 3 | Normal characters are written as they are. |
+| 4 | When a `%` is found, the next character tells which conversion to apply. |
+| 5 | The matching helper takes the next argument with `va_arg` and prints it. |
+| 6 | Every printed character is counted along the way. |
+| 7 | `va_end` closes the list, and the total count is returned. |
+
+---
+
 ## Resources
 
 - `man 3 printf`, `man 3 stdarg`
@@ -90,4 +99,10 @@ A good way to test is to compare the output and the return value of `ft_printf` 
 
 ### Use of AI
 
-AI was used as a learning aid, to explain how hexadecimal conversion works (with and without bit shifting), to help review the character-counting logic, and to help write the Makefile and this README. All the code was written and tested by me.
+AI (Claude) was used as a learning aid for these tasks only:
+
+- **Hexadecimal conversion:** explaining how it works (division by 16 versus bit shifting) and how to count the printed characters.
+- **Code review:** pointing out bugs in my counting logic, the `-Wtype-limits` compile error and the missing prototype in the header. I fixed them myself.
+- **Documentation:** helping to draft the `Makefile` and this README, which I then checked and edited.
+
+The implementation of `ft_printf` and its helpers was written and tested by me.
