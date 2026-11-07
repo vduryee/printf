@@ -38,7 +38,7 @@ int ft_printf(const char *format, ...);
 ├── Makefile
 ├── ft_printf.h        # prototypes and includes
 ├── ft_printf.c        # ft_printf and conversion dispatch
-└── ft_print_utils.c   # printing helpers (char, string, numbers, hex)
+└── ft_printf_utils.c   # printing helpers (char, string, numbers, hex)
 ```
 
 ## Instructions

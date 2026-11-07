@@ -6,7 +6,7 @@
 /*   By: vduryee <vduryee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/05 13:43:23 by vduryee           #+#    #+#             */
-/*   Updated: 2026/11/06 15:28:22 by vduryee          ###   ########.fr       */
+/*   Updated: 2026/11/07 09:51:44 by vduryee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	ft_putnbr(int n)
 		count += ft_putchar('-');
 		n = n * -1;
 	}
-	if (n >= 0 && n < 10)
+	if (n < 10)
 		count += ft_putchar(n + '0');
 	else
 	{
@@ -67,12 +67,12 @@ int	ft_putnbr_unsigned(unsigned int n)
 	int	count;
 
 	count = 0;
-	if (n >= 0 && n < 10)
+	if (n < 10)
 		count += ft_putchar(n + '0');
 	else
 	{
-		count += ft_putnbr(n / 10);
-		count += ft_putnbr(n % 10);
+		count += ft_putnbr_unsigned(n / 10);
+		count += ft_putnbr_unsigned(n % 10);
 	}
 	return (count);
 }
