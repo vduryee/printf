@@ -6,7 +6,7 @@
 /*   By: vduryee <vduryee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/02 13:49:14 by vduryee           #+#    #+#             */
-/*   Updated: 2026/11/06 15:27:09 by vduryee          ###   ########.fr       */
+/*   Updated: 2026/11/07 11:33:06 by vduryee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	ft_printf(const char *format, ...)
 	int		count;
 	va_list	args;
 
+	if (!format)
+		return (-1);
 	i = 0;
 	count = 0;
 	va_start (args, format);

@@ -6,7 +6,7 @@
 /*   By: vduryee <vduryee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/05 13:43:23 by vduryee           #+#    #+#             */
-/*   Updated: 2026/11/07 09:51:44 by vduryee          ###   ########.fr       */
+/*   Updated: 2026/11/07 11:44:55 by vduryee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,15 @@ int	ft_putstr(char *str)
 	int	i;
 
 	if (!str)
-		return (ft_putstr("(null)"));
+	{
+		write(1, "(null)", 6);
+		return (6);
+	}
 	count = 0;
 	i = 0;
-	while (str[count])
-		count++;
 	while (str[i])
 	{
-		ft_putchar(str[i]);
+		count += ft_putchar(str[i]);
 		i++;
 	}
 	return (count);
@@ -45,7 +46,7 @@ int	ft_putnbr(int n)
 	if (n == -2147483648)
 	{
 		write(1, "-2147483648", 11);
-		return (count + 11);
+		return (11);
 	}
 	if (n < 0)
 	{
